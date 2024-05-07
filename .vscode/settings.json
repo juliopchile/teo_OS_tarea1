@@ -1,0 +1,19 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "curses.h": "c",
+        "stdlib.h": "c",
+        "semaphore.h": "c",
+        "types.h": "c",
+        "pthread.h": "c",
+        "unistd.h": "c",
+        "shm.h": "c",
+        "fcntl.h": "c",
+        "stat.h": "c",
+        "mman.h": "c",
+        "struct_iovec.h": "c",
+        "typeinfo": "c",
+        "string.h": "c",
+        "errno.h": "c"
+    }
+}
