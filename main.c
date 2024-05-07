@@ -44,7 +44,7 @@ TODO: Añadir los mensajes de error, asserts y esas cosas (dejar para el final)
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <sys/wait.h>
-//#include <errno.h>
+#include <errno.h>
 
 /*************************************************************
 *   @brief      Convierte un arreglo en un número entero.
@@ -54,8 +54,6 @@ TODO: Añadir los mensajes de error, asserts y esas cosas (dejar para el final)
 *   @throw      Si el arreglo no es un número entero válido.
 *************************************************************/
 int parse_int(char *str);
-
-
 
 
 int main(int argc, char *argv[]) {
@@ -75,12 +73,6 @@ int main(int argc, char *argv[]) {
     /* Semaforos */
     sem_t *sem;
     const char *sem_name = "/sem-conway";
-    // sem_t sem; // (version antigua)
-
-
-    //initscr();            // Inicializar ncurses
-    sem = sem_open(sem_name, O_CREAT | O_RDWR, 0666, 1); // Inicializar semaforo nombrado
-    // sem_init(&sem, 1, 1);                            // Inicializar semaforo (version antigua)
 
     /***************************
      ** Proceso Padre (main)
@@ -107,6 +99,8 @@ int main(int argc, char *argv[]) {
             sprintf(shm_ptr+i, "%c", '0');
     }
 
+    //initscr();            // Inicializar ncurses
+    sem = sem_open(sem_name, O_CREAT | O_RDWR, 0666, 1); // Inicializar semaforo nombrado
 
     /***************************
      ** Proceso Hijo 1
@@ -122,15 +116,7 @@ int main(int argc, char *argv[]) {
 
         printf("Sección crítica del hijo 1\n");
         sleep(2);
-        // Implementación de ejemplo para demostrar que recorre la memoria compartida
-        printf("Lectura realizada desde Región de Memoria Compartida\n");
-        char *pixel = (char*)ptr_hijo1;
-        for(i=1;i<=ROWS;i++) {
-            for(j=1;j<=COLUMNS;j++) {
-                printf("%c",pixel[(j-1)+(i-1)*COLUMNS]);
-            }
-        }
-        printf("\n\n");
+
         sem_post(sem);
 
         return 0;
@@ -151,15 +137,7 @@ int main(int argc, char *argv[]) {
 
         printf("Sección crítica del hijo 2\n");
         sleep(2);
-        // Implementación de ejemplo para demostrar que recorre la memoria compartida
-        printf("Lectura realizada desde Región de Memoria Compartida\n");
-        char *pixel = (char*)ptr_hijo2;
-        for(i=1;i<=ROWS;i++) {
-            for(j=1;j<=COLUMNS;j++) {
-                printf("%c",pixel[(j-1)+(i-1)*COLUMNS]);
-            }
-        }
-        printf("\n\n");
+
         sem_post(sem);
 
         return 0;
@@ -188,7 +166,6 @@ int main(int argc, char *argv[]) {
         exit(1);
     }
 
-    // sem_destroy(&sem);       // Destruir semaforo (version antigua)
     sem_close(sem);             // Cerrar semaforo
     sem_unlink(sem_name);  // Eliminar el semáforo del sistema
 
