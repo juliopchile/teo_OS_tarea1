@@ -14,6 +14,9 @@
         "struct_iovec.h": "c",
         "typeinfo": "c",
         "string.h": "c",
-        "errno.h": "c"
+        "errno.h": "c",
+        "funciones.h": "c",
+        "struct_timespec.h": "c",
+        "wait.h": "c"
     }
 }

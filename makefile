@@ -1,25 +1,20 @@
 CC := gcc
-CFLAGS := -w -g
-SRC_FILES := main.c
-OBJ_FILES := $(SRC_FILES:.c=)
-.DEFAULT_GOAL := all
+CFLAGS := -std=c99 -Wall -Wextra -Wpedantic -g -D_XOPEN_SOURCE=500 -D_SVID_SOURCE -D_DEFAULT_SOURCE
+LDLIBS := -lrt -lncurses -lpthread
 
-.PHONY: all compile run clean
+SRC := main.c funciones.c
+OBJ := $(SRC:.c=.o)
+EXEC := main
 
-all: compile
+.PHONY: all clean
 
-compile: $(OBJ_FILES)
+all: $(EXEC)
 
-$(OBJ_FILES): %: %.c
-	$(CC) $(CFLAGS) $< -o $@ -lrt -lncurses -lpthread
+$(EXEC): $(OBJ)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDLIBS)
 
-run_%: %
-	./$<
-
-run: run_main
-
-clean_%:
-	rm -f $*
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ_FILES)
+	rm -f $(EXEC) $(OBJ)
