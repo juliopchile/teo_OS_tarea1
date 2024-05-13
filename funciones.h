@@ -3,6 +3,8 @@
 
 #define ROWS 40
 #define COLUMNS 120
+#define TASA_UPDATE 200000  /* frecuencia actualización de cambios (microsegundos) */
+#define TASA_REFRESCO 30000 /* frecuencia refresco pantalla (microsegundos) */
 
 #include <curses.h> /* Incluir librería y compilar con la opción "-lncurses"*/
 #include <stdio.h>
@@ -20,20 +22,18 @@
 /******************************************************************************
  *   @brief      Convierte un arreglo en un número entero.
  *
- *   @param str   El arreglo que a convertir en número entero.
+ *   @param str   El arreglo a convertir en número entero.
  *   @return      El número entero correspondiente a el arreglo.
- *   @throw       Si el arreglo no es un número entero válido.
+ *   @throw       Sale del programa si no es un número entero válido.
  *****************************************************************************/
-int parse_int(char *str);
-
+extern int parse_int(char *str);
 
 /******************************************************************************
  *   @brief      Asigna valores iniciales aleatorios a la memoria compartida.
  *
  *   @param shm_ptr   Puntero a la memoria compartida.
  *****************************************************************************/
-void asignar_valores_iniciales(void *shm_ptr);
-
+extern void asignar_valores_iniciales(void *shm_ptr);
 
 /******************************************************************************
  *   @brief      Copia los datos de la memoria compartida a una matriz.
@@ -41,8 +41,7 @@ void asignar_valores_iniciales(void *shm_ptr);
  *   @param src    Puntero a los datos en la memoria compartida.
  *   @param dest   Matriz de caracteres donde se copiarán los datos.
  *****************************************************************************/
-void copiar_datos(void *src, char **dest);
-
+extern void copiar_datos(void *src, char **dest);
 
 /******************************************************************************
  *   @brief      Cuenta el número de vecinos vivos en cada celda de la matriz.
@@ -50,8 +49,7 @@ void copiar_datos(void *src, char **dest);
  *   @param matriz    Matriz que representa el estado actual del juego de la vida.
  *   @param vecinos   Matriz de enteros donde se almacenarán los conteos de vecinos.
  *****************************************************************************/
-void contar_vecinos(char **matriz, int **vecinos);
-
+extern void contar_vecinos(char **matriz, int **vecinos);
 
 /******************************************************************************
  *   @brief      Actualiza el estado del juego de la vida utilizando las
@@ -64,8 +62,7 @@ void contar_vecinos(char **matriz, int **vecinos);
  *   @param matriz_vecinos   Matriz que almacena el número de vecinos vivos
  *                           para cada celda.
  *****************************************************************************/
-void juego_de_la_vida(void *shm_ptr, char **matriz, int **matriz_vecinos);
-
+extern void juego_de_la_vida(void *shm_ptr, char **matriz, int **matriz_vecinos);
 
 /******************************************************************************
  *   @brief      Actualiza la pantalla de visualización del juego de la vida.
@@ -73,8 +70,7 @@ void juego_de_la_vida(void *shm_ptr, char **matriz, int **matriz_vecinos);
  *   @param shm_ptr   Puntero a la memoria compartida donde se almacena el
  *                    estado del juego.
  *****************************************************************************/
-void update_pantalla(void *shm_ptr);
-
+extern void update_pantalla(void *shm_ptr);
 
 /******************************************************************************
  *   @brief      Verifica si una celda está viva en el estado actual del
@@ -86,7 +82,6 @@ void update_pantalla(void *shm_ptr);
  *   @param y         Coordenada y de la celda.
  *   @return          1 si la celda está viva, 0 en caso contrario.
  *****************************************************************************/
-int is_alive(void *shm_ptr, int x, int y);
-
+extern int is_alive(void *shm_ptr, int x, int y);
 
 #endif /* FUNCIONES_H */
